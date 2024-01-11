@@ -54,7 +54,7 @@ route.delete('/:id', isValidUserId, async (req, res) => {
   }
 });
 
-route.patch('/:id', isValidUserId, isValidInfo, async (req, res) => {
+route.patch('/:id', isValidUserId, async (req, res) => {
   try {
     const { id } = req.params;
     const { body } = req.body;

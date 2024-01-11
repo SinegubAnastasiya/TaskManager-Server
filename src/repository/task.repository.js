@@ -48,4 +48,22 @@ async function updateTaskDB(id, task, user_id) {
   }
 }
 
-module.exports = { createTaskDB, getAllTasksDB, getTaskByIdDB, updateTaskDB };
+async function deleteTaskDB(id) {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    const sql = 'DELETE FROM tasks WHERE id = $1 RETURNING *';
+    const { rows } = await client.query(sql, [id]);
+
+    await client.query('COMMIT');
+
+    return rows;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    return [];
+  }
+}
+
+module.exports = { createTaskDB, getAllTasksDB, getTaskByIdDB, updateTaskDB, deleteTaskDB };
