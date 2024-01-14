@@ -78,13 +78,13 @@ async function getUserByEmailDB(email) {
 async function updateBodyDB(id, body) {
   const client = await pool.connect();
   const sql = 'SELECT * FROM users WHERE id = $1';
-  const { rows } = await client.query(sql, [id]);
+  const data = (await client.query(sql, [id])).rows;
 
-  const newObj = { ...rows[0], ...body };
+  const newObj = { ...data[0], ...body };
   const sql1 = 'UPDATE users SET name = $1, surname = $2, email = $3, pwd = $4 WHERE id = $5 RETURNING *';
-  const { data } = await client.query(sql1, [newObj.name, newObj.surname, newObj.email, newObj.pwd, id]);
+  const { rows } = await client.query(sql1, [newObj.name, newObj.surname, newObj.email, newObj.pwd, id]);
 
-  return data;
+  return rows;
 }
 
 module.exports = {

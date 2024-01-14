@@ -1,6 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const { createNewTask, getAllTasks, getTaskById, updateTaskById, deleteTaskById } = require('../service/task.service');
+const { createNewTask, getAllTasks, getTaskById, updateTaskById, deleteTaskById, updateTaskBody } = require('../service/task.service');
 const { buildResponse } = require('../helper/buildResponse');
 
 route.post('/', async (req, res) => {
@@ -47,6 +47,17 @@ route.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const data = await deleteTaskById(id);
+    buildResponse(res, 200, data);
+  } catch (error) {
+    buildResponse(res, 404, error.message);
+  }
+});
+
+route.patch('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { body } = req.body;
+    const data = await updateTaskBody(id, body);
     buildResponse(res, 200, data);
   } catch (error) {
     buildResponse(res, 404, error.message);

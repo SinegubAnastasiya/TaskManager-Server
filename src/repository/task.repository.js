@@ -66,4 +66,24 @@ async function deleteTaskDB(id) {
   }
 }
 
-module.exports = { createTaskDB, getAllTasksDB, getTaskByIdDB, updateTaskDB, deleteTaskDB };
+async function updateTaskBodyDB(id, body) {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+    const sql1 = 'SELECT * from tasks WHERE id = $1';
+    const oldObj = (await client.query(sql1, [id])).rows;
+    const newObj = { ...oldObj[0], ...body };
+    const sql2 = 'UPDATE tasks SET task = $1, user_id = $2 WHERE id = $3 RETURNING *';
+    const result = (await client.query(sql2, [newObj.task, newObj.user_id, id])).rows;
+
+    await client.query('COMMIT');
+
+    return result;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    return [];
+  }
+}
+
+module.exports = { createTaskDB, getAllTasksDB, getTaskByIdDB, updateTaskDB, deleteTaskDB, updateTaskBodyDB };

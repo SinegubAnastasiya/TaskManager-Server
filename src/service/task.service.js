@@ -1,4 +1,4 @@
-const { createTaskDB, getAllTasksDB, getTaskByIdDB, updateTaskDB, deleteTaskDB } = require('../repository/task.repository');
+const { createTaskDB, getAllTasksDB, getTaskByIdDB, updateTaskDB, deleteTaskDB, updateTaskBodyDB } = require('../repository/task.repository');
 
 async function createNewTask(task, user_id) {
   const data = await createTaskDB(task, user_id);
@@ -27,4 +27,9 @@ async function deleteTaskById(id) {
   return data;
 }
 
-module.exports = { createNewTask, getAllTasks, getTaskById, updateTaskById, deleteTaskById };
+async function updateTaskBody(id, body) {
+  const data = await updateTaskBodyDB(id, body);
+  return data;
+}
+
+module.exports = { createNewTask, getAllTasks, getTaskById, updateTaskById, deleteTaskById, updateTaskBody };
