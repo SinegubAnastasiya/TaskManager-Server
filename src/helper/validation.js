@@ -1,5 +1,5 @@
 /* eslint-disable no-prototype-builtins */
-function isValidUserId(req, res, next) {
+function isValidId(req, res, next) {
   if (!req.params.hasOwnProperty('id')) throw new Error('There is no id');
 
   const { id } = req.params;
@@ -29,4 +29,4 @@ function isValidInfo(req, res, next) {
   next();
 }
 
-module.exports = { isValidInfo, isValidUserId };
+module.exports = { isValidInfo, isValidId };
