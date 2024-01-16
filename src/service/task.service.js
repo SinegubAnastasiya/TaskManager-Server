@@ -32,4 +32,11 @@ async function updateTaskBody(id, body) {
   return data;
 }
 
-module.exports = { createNewTask, getAllTasks, getTaskById, updateTaskById, deleteTaskById, updateTaskBody };
+module.exports = {
+  createNewTask,
+  getAllTasks,
+  getTaskById,
+  updateTaskById,
+  deleteTaskById,
+  updateTaskBody,
+};

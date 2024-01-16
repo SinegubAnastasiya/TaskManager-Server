@@ -86,4 +86,11 @@ async function updateTaskBodyDB(id, body) {
   }
 }
 
-module.exports = { createTaskDB, getAllTasksDB, getTaskByIdDB, updateTaskDB, deleteTaskDB, updateTaskBodyDB };
+module.exports = {
+  createTaskDB,
+  getAllTasksDB,
+  getTaskByIdDB,
+  updateTaskDB,
+  deleteTaskDB,
+  updateTaskBodyDB,
+};

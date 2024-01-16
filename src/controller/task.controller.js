@@ -2,7 +2,7 @@ const express = require('express');
 const route = express.Router();
 const { createNewTask, getAllTasks, getTaskById, updateTaskById, deleteTaskById, updateTaskBody } = require('../service/task.service');
 const { buildResponse } = require('../helper/buildResponse');
-const { isValidId } = require('../helper/validation')
+const { isValidId } = require('../helper/validation');
 
 route.post('/', async (req, res) => {
   try {
@@ -23,7 +23,7 @@ route.get('/', async (req, res) => {
   }
 });
 
-route.get('/:id',isValidId, async (req, res) => {
+route.get('/:id', isValidId, async (req, res) => {
   try {
     const { id } = req.params;
     const data = await getTaskById(id);
