@@ -16,9 +16,13 @@ async function createUser(name, surname, email, pwd) {
 }
 
 async function userAuth(email, pwd) {
-  const data = await createUserDB(email, pwd);
-  if (!data.length) throw new Error('Array is empty');
-  return data;
+  const user = await getUserByEmailDB(email);
+  if (!user.length) throw new Error('Such user does not exist');
+
+  const hashedPwd = user.pwd;
+  if (!(await bcrypt.compare(pwd, hashedPwd))) throw new Error('Pwd is invalid');
+
+  return user;
 }
 
 module.exports = { createUser, userAuth };
