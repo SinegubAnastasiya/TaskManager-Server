@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-function createToken() {
+function createToken(data) {
   const secret = 'secretWord';
-
-  return jwt.sign({}, secret);
+  return jwt.sign(data[0], secret);
 }
 
 module.exports = { createToken };
